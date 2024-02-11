@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -22,6 +23,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,10 +44,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeIntroTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    color = MaterialTheme.colorScheme.background,
-                ) {
-                    Greeting()
+                Column(modifier = Modifier.fillMaxSize()) {
+                    Text(text = stringResource(id = R.string.app_name),
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.primary)
+                            .padding(16.dp))
+
                 }
             }
         }
@@ -45,60 +57,61 @@ class MainActivity : ComponentActivity() {
 }
 
 
+
+
+@Preview (showBackground = true)
 @Composable
-fun Greeting(){
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Box(
-            modifier = Modifier
-                .background(Color.Blue),
-            contentAlignment = Alignment.Center
-        ) {
-            Box(modifier = Modifier.height(50.dp).width(50.dp).background(Color.Green))
-            Text(text = "i love android", fontSize = 40.sp)
+fun DefaultPreview(){
+    ComposeIntroTheme {
+        Column(modifier = Modifier.fillMaxSize()) {
+            CustomText3()
         }
     }
 }
 
-@Preview
 @Composable
-fun DefualtPreview(){
-    ComposeIntroTheme {
-        Greeting()
-    }
+fun CustomText() {
+    Text(text = stringResource(id = R.string.app_name),
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.primary)
+            .padding(16.dp)
+            .width(300.dp),
+        color = Color.Cyan,
+        fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+        fontStyle = FontStyle.Italic,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.End
+    )
 }
-// Row(modifier = Modifier.height(500.dp).width(500.dp)
-//                        .background(Color.LightGray),
-//                        horizontalArrangement = Arrangement.Start) {
-//                        CustomItem( weight = 3f, MaterialTheme.colorScheme.secondary)
-//                        CustomItem( weight = 1f)
-//                    }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    ComposeIntroTheme {
-//        Row(modifier = Modifier.height(500.dp),
-//            horizontalArrangement = Arrangement.Start,
-//        ) {
-//            CustomItem( )
-//            CustomItem( weight = 2f, MaterialTheme.colorScheme.secondary )
-//        }
-//    }
-//}
-//
-//
-//@Composable
-//fun RowScope.CustomItem(weight: Float = 1f,  color: Color= MaterialTheme.colorScheme.primary){
-//    Surface(
-//        modifier = Modifier
-//            .width(50.dp)
-//            .height(50.dp)
-//            .weight(weight),
-//        color = color
-//    ) {
-//
-//    }
-//}
+@Composable
+fun CustomText2() {
+    Text(
+        buildAnnotatedString {
+            withStyle(style = ParagraphStyle(textAlign = TextAlign.Center)) {
+                withStyle(
+                    style = SpanStyle(
+                        color = Color.DarkGray,
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                ) {
+                    append("a")
+                }
+
+                append("b")
+                append("c")
+                append("d")
+            }
+        }, modifier = Modifier.width(200.dp)
+    )
+}
+
+
+
+@Composable
+fun CustomText3() {
+    Text(
+        text = "hellow world".repeat(30), maxLines = 2, overflow = TextOverflow.Ellipsis
+    )
+}

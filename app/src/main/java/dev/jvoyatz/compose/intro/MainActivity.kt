@@ -3,14 +3,28 @@ package dev.jvoyatz.compose.intro
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.jvoyatz.compose.intro.ui.theme.ComposeIntroTheme
 import dev.jvoyatz.compose.intro.ui.theme.Typography
 
@@ -21,40 +35,70 @@ class MainActivity : ComponentActivity() {
             ComposeIntroTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
-                    Greeting("Android")
+                    Greeting()
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
 
 @Composable
-fun CustomText(text: String) {
-    Text(
-        text = text,
-        style = Typography.headlineMedium
-        )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ComposeIntroTheme {
-        Column {
-            Greeting("Android")
-            CustomText(text = "hello world")
+fun Greeting(){
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .background(Color.Blue),
+            contentAlignment = Alignment.Center
+        ) {
+            Box(modifier = Modifier.height(50.dp).width(50.dp).background(Color.Green))
+            Text(text = "i love android", fontSize = 40.sp)
         }
     }
 }
+
+@Preview
+@Composable
+fun DefualtPreview(){
+    ComposeIntroTheme {
+        Greeting()
+    }
+}
+// Row(modifier = Modifier.height(500.dp).width(500.dp)
+//                        .background(Color.LightGray),
+//                        horizontalArrangement = Arrangement.Start) {
+//                        CustomItem( weight = 3f, MaterialTheme.colorScheme.secondary)
+//                        CustomItem( weight = 1f)
+//                    }
+
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview() {
+//    ComposeIntroTheme {
+//        Row(modifier = Modifier.height(500.dp),
+//            horizontalArrangement = Arrangement.Start,
+//        ) {
+//            CustomItem( )
+//            CustomItem( weight = 2f, MaterialTheme.colorScheme.secondary )
+//        }
+//    }
+//}
+//
+//
+//@Composable
+//fun RowScope.CustomItem(weight: Float = 1f,  color: Color= MaterialTheme.colorScheme.primary){
+//    Surface(
+//        modifier = Modifier
+//            .width(50.dp)
+//            .height(50.dp)
+//            .weight(weight),
+//        color = color
+//    ) {
+//
+//    }
+//}

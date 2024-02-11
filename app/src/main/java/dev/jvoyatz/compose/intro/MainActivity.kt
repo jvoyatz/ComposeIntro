@@ -1,6 +1,8 @@
 package dev.jvoyatz.compose.intro
 
+import android.graphics.drawable.Icon
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateContentSize
@@ -19,14 +21,24 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,6 +53,8 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -59,7 +73,7 @@ class MainActivity : ComponentActivity() {
             ComposeIntroTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colorScheme.background) {
-                    ExpandableCard(title = "test title", descriptionText = "test description")
+                    Greeting()
                 }
             }
         }
@@ -67,6 +81,95 @@ class MainActivity : ComponentActivity() {
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Greeting() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        var text by remember {
+            mutableStateOf("Type here...")
+        }
+        BasicTextField(
+            modifier = Modifier.background(Color.LightGray).padding(16.dp),
+            value = text,
+            onValueChange = {
+                text = it
+            },
+            enabled = true,
+            readOnly = false,
+//            label = {
+//                Text(text = "Title")
+//            },
+            singleLine = true,
+//            leadingIcon = {
+//                IconButton(onClick = { /*TODO*/ }) {
+//                    Icon(
+//                        imageVector = Icons.Filled.Email,
+//                        contentDescription = "email"
+//                    )
+//                }
+//            },
+//            trailingIcon = {
+//                IconButton(onClick = { Log.d("compose", "Greeting: trailing ") }) {
+//                    Icon(
+//                        imageVector = Icons.Filled.Check,
+//                        contentDescription = "check"
+//                    )
+//                }
+//            },
+
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Search
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = { Log.d("compose", "Greeting: ime action search")}
+            )
+        )
+    }
+
+}
+
+//   OutlinedTextField(
+//            value = text,
+//            onValueChange = {
+//                text = it
+//            },
+//            enabled = true,
+//            readOnly = false,
+//            label = {
+//                Text(text = "Title")
+//            },
+//            singleLine = true,
+//            leadingIcon = {
+//                IconButton(onClick = { /*TODO*/ }) {
+//                    Icon(
+//                        imageVector = Icons.Filled.Email,
+//                        contentDescription = "email"
+//                    )
+//                }
+//            },
+//            trailingIcon = {
+//                IconButton(onClick = { Log.d("compose", "Greeting: trailing ") }) {
+//                    Icon(
+//                        imageVector = Icons.Filled.Check,
+//                        contentDescription = "check"
+//                    )
+//                }
+//            },
+//
+//            keyboardOptions = KeyboardOptions(
+//                keyboardType = KeyboardType.Email,
+//                imeAction = ImeAction.Search
+//            ),
+//            keyboardActions = KeyboardActions(
+//                onSearch = { Log.d("compose", "Greeting: ime action search")}
+//            )
+//        )
+//    }
 
 
 @Preview (showBackground = true)
@@ -74,7 +177,7 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview(){
     ComposeIntroTheme {
         Column(modifier = Modifier.fillMaxSize()) {
-
+            Greeting()
         }
     }
 }

@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.DisableSelection
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -44,19 +46,27 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeIntroTheme {
                 // A surface container using the 'background' color from the theme
-                Column(modifier = Modifier.fillMaxSize()) {
-                    Text(text = stringResource(id = R.string.app_name),
-                        modifier = Modifier
-                            .background(MaterialTheme.colorScheme.primary)
-                            .padding(16.dp))
-
+                Surface(color = MaterialTheme.colorScheme.background) {
+                    CustomText()
                 }
             }
         }
     }
 }
 
+@Composable
+fun CustomText(){
+    SelectionContainer {
 
+        Column {
+            Text(text = "hello world")
+            DisableSelection {
+                Text(text = "hello world")
+            }
+            Text(text = "hello world")
+        }
+    }
+}
 
 
 @Preview (showBackground = true)
@@ -64,54 +74,7 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview(){
     ComposeIntroTheme {
         Column(modifier = Modifier.fillMaxSize()) {
-            CustomText3()
+            
         }
     }
-}
-
-@Composable
-fun CustomText() {
-    Text(text = stringResource(id = R.string.app_name),
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.primary)
-            .padding(16.dp)
-            .width(300.dp),
-        color = Color.Cyan,
-        fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-        fontStyle = FontStyle.Italic,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.End
-    )
-}
-
-@Composable
-fun CustomText2() {
-    Text(
-        buildAnnotatedString {
-            withStyle(style = ParagraphStyle(textAlign = TextAlign.Center)) {
-                withStyle(
-                    style = SpanStyle(
-                        color = Color.DarkGray,
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                ) {
-                    append("a")
-                }
-
-                append("b")
-                append("c")
-                append("d")
-            }
-        }, modifier = Modifier.width(200.dp)
-    )
-}
-
-
-
-@Composable
-fun CustomText3() {
-    Text(
-        text = "hellow world".repeat(30), maxLines = 2, overflow = TextOverflow.Ellipsis
-    )
 }

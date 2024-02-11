@@ -31,10 +31,12 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.jvoyatz.compose.intro.ui.theme.ComposeIntroTheme
@@ -47,7 +49,7 @@ class MainActivity : ComponentActivity() {
             ComposeIntroTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colorScheme.background) {
-                    CustomText()
+                    SuperScriptText(normalText = "hello", superText = "world")
                 }
             }
         }
@@ -55,26 +57,38 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun CustomText(){
-    SelectionContainer {
-
-        Column {
-            Text(text = "hello world")
-            DisableSelection {
-                Text(text = "hello world")
-            }
-            Text(text = "hello world")
+fun SuperScriptText(
+    normalText: String,
+    normalFontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize,
+    superText: String,
+    superTextFontSIze: TextUnit = MaterialTheme.typography.labelSmall.fontSize,
+    superTextFontWeight: FontWeight = FontWeight.Normal
+) {
+    Text(buildAnnotatedString {
+        withStyle(
+            SpanStyle(
+            fontSize = normalFontSize
+        )
+        ) {
+            append(normalText)
         }
-    }
+        withStyle(style = SpanStyle(
+            fontSize =superTextFontSIze,
+            fontWeight = superTextFontWeight,
+            baselineShift = BaselineShift.Subscript
+        )
+        ) {
+            append(superText)
+        }
+    })
 }
-
 
 @Preview (showBackground = true)
 @Composable
 fun DefaultPreview(){
     ComposeIntroTheme {
         Column(modifier = Modifier.fillMaxSize()) {
-            
+            SuperScriptText(normalText = "normalTExt", superText = "superScript")
         }
     }
 }

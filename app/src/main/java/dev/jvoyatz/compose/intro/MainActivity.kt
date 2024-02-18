@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -28,6 +29,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -55,7 +58,20 @@ class MainActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Greeting()
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        GradientButton(text = "button", textColor =
+                            Color.White, gradient = Brush.horizontalGradient(
+                                colors = listOf(
+                                    Color.Green,
+                                    Color.Blue
+                                )
+                            )) {
+                            
+                        }
+                    }
                 }
             }
         }
@@ -68,33 +84,7 @@ fun Greeting() {
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
-        var password by rememberSaveable {
-            mutableStateOf("")
-        }
 
-        var passwordvis by rememberSaveable {
-            mutableStateOf(false)
-        }
-
-        val icon = if(passwordvis) {
-            painterResource(id = R.drawable.baseline_visibility_24)
-        } else {
-            painterResource(id = R.drawable.baseline_visibility_off_24)
-        }
-
-        OutlinedTextField(value = password, onValueChange = { password = it },
-            placeholder = { Text(text = "password") },
-            label = { Text(text = "password") },
-            trailingIcon = {
-                IconButton(onClick = { passwordvis = !passwordvis }) {
-                    Icon(icon, contentDescription = null)
-                }
-            },
-            visualTransformation = if(passwordvis) VisualTransformation.None else PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password
-            )
-        )
     }
 }
 
